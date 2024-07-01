@@ -1,4 +1,14 @@
 const styles = {
+  chatInterface: {
+    container: true,
+    height: '100%',
+    width: '100%',
+    direction: 'row',
+    sx: {
+      flexWrap: 'nowrap',
+      position: 'relative',
+    },
+  },
   mainGridProps: {
     container: true,
     item: true,

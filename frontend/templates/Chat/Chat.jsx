@@ -23,6 +23,7 @@ import NavigationIcon from '@/assets/svg/Navigation.svg';
 import { MESSAGE_ROLE, MESSAGE_TYPES } from '@/constants/bots';
 
 import CenterChatContentNoMessages from './CenterChatContentNoMessages';
+import ChatHistoryWindow from './ChatHistoryWindow';
 import ChatSpinner from './ChatSpinner';
 import Message from './Message';
 import styles from './styles';
@@ -357,12 +358,16 @@ const ChatInterface = () => {
   };
 
   return (
-    <Grid {...styles.mainGridProps}>
-      {renderMoreChat()}
-      {renderCenterChatContent()}
-      {renderCenterChatContentNoMessages()}
-      {renderNewMessageIndicator()}
-      {renderBottomChatContent()}
+    <Grid {...styles.chatInterface}>
+      <Grid {...styles.mainGridProps} xs={9}>
+        {renderMoreChat()}
+        {renderCenterChatContent()}
+        {renderCenterChatContentNoMessages()}
+        {renderNewMessageIndicator()}
+        {renderBottomChatContent()}
+      </Grid>
+      {/* ChatHistoryWindow component displays a sidebar that contains chat history. This component is rendered on the right side of the chat interface. */}
+      <ChatHistoryWindow />
     </Grid>
   );
 };
