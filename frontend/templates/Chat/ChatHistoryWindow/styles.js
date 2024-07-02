@@ -15,24 +15,28 @@ const styles = {
       display: 'flex',
       // Set the flex direction to column.
       flexDirection: 'column',
-      // Set the border color and width.
-      border: '1px solid rgba(105, 73, 255, 1)',
+      // Adjust the border of the sidebar based on the value of showHistorySidebar.
+      // If showHistorySidebar is true, set the border to 5px solid rgba(115,80,255,255).
+      // If showHistorySidebar is false, set the border to none.
+      border: showHistorySidebar ? '5px solid rgba(115,80,255,255)' : 'none',
       // Set the border radius.
       borderRadius: '15px',
-      // Set the background color.
-      backgroundColor: '#ffffff',
-      // Adjust the width of the sidebar based on the value of showHistorySidebar.
-      // If showHistorySidebar is true, set the width to 30%.
-      // If showHistorySidebar is false, set the width to fit the content.
-      width: showHistorySidebar ? '30%' : 'fit-content',
+      // Adjust the background of the sidebar based on the value of showHistorySidebar.
+      // If showHistorySidebar is true, set the background to black.
+      // If showHistorySidebar is false, set the background to transparent.
+      backgroundColor: showHistorySidebar ? '#000000' : 'transparent',
+      // Adjust the min-width of the sidebar based on the value of showHistorySidebar.
+      // If showHistorySidebar is true, set the min-width to 25%.
+      // If showHistorySidebar is false, set the min-width to fit the content.
+      minWidth: showHistorySidebar ? '25%' : 'fit-content',
       // Adjust the height of the sidebar based on the value of showHistorySidebar.
       // If showHistorySidebar is true, set the height to 100%.
       // If showHistorySidebar is false, set the height to fit the content.
       height: showHistorySidebar ? '100%' : 'fit-content',
-      // Adjust the padding bottom of the sidebar based on the value of showHistorySidebar.
-      // If showHistorySidebar is true, set the padding bottom to 10px.
-      // If showHistorySidebar is false, set the padding bottom to 0px.
-      paddingBottom: showHistorySidebar ? '10px' : '0px',
+      // Set the color to white.
+      color: '#ffffff',
+      // Set the max width of the sidebar to 25%.
+      maxWidth: '25%',
     },
   }),
   /**
@@ -80,27 +84,26 @@ const styles = {
   /**
    * Styles for the toggle history button.
    *
+   * @param {boolean} showHistorySidebar - Whether the chat history sidebar is shown or hidden.
    * @return {object} - The styles for the toggle history button.
    */
-  toggleHistoryButton: {
+  toggleHistoryButton: (showHistorySidebar) => ({
     sx: {
-      // Set the background color to transparent.
-      backgroundColor: 'transparent',
+      // Set the background color to black.
+      backgroundColor: '#000000',
       // Set the text color to a custom color.
-      color: 'rgba(105, 73, 255, 1)',
-      // Set the font size to large.
-      fontSize: 'large',
-      // Define styles for the hover state.
-      ':hover': {
-        // Set the background color to transparent.
-        backgroundColor: 'transparent',
-        // Set the text color to the same custom color.
-        color: 'rgba(105, 73, 255, 1)',
-        // Set the opacity to 0.7.
-        opacity: 0.7,
+      color: 'rgba(115,80,255,255)',
+      // Adjust the border of the toggle button based on the value of showHistorySidebar.
+      // If showHistorySidebar is true, set the border to none.
+      // If showHistorySidebar is false, set the border to 5px solid rgba(115,80,255,255).
+      border: !showHistorySidebar ? '5px solid rgba(115,80,255,255)' : 'none',
+      // Styles for the toggle history button when it is being hovered over.
+      '&:hover': {
+        // Set the background color to black on hover.
+        backgroundColor: '#000000',
       },
     },
-  },
+  }),
   /**
    * Styles for the content of the chat history sidebar.
    *
@@ -112,14 +115,18 @@ const styles = {
     sx: {
       // Display the sidebar only when showHistorySidebar is true
       display: showHistorySidebar ? 'block' : 'none',
-      // Set the height of the sidebar to the full viewport height
+      // Set the background color to rgba(24,26,32,255)
+      backgroundColor: 'rgba(24,26,32,255)',
+      // Set the height of the sidebar to 100%
       height: '100%',
+      // Set the width of the sidebar to 100%
+      width: '100%',
       // Enable vertical scrolling if the content overflows
       overflowY: 'auto',
-      // Add a border at the top of the sidebar
-      borderTop: '1px solid rgba(105, 73, 255, 1)',
+      // Set the border radius.
+      borderRadius: '0px 0px 15px 15px',
       // Add a smooth transition when the sidebar is opened or closed
-      transition: 'right 0.3s ease',
+      transition: 'all 0.3s ease',
     },
   }),
 };
