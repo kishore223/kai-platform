@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
-import { Button, Grid, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import { CircularProgress, Fab, Grid, Typography } from '@mui/material';
+
+import { useSelector } from 'react-redux';
 
 import ChatHistory from '../ChatHistory';
 
@@ -31,7 +35,8 @@ const testData = [
     messages: [
       {
         payload: {
-          text: 'Hi Kai. I am Test. How are you?',
+          // text: 'Hi Kai. I am Test.',
+          text: 'Hi Kai. I am Test. How are you doing? I am fine what about you?',
           role: 'human',
           timestamp:
             'Thu Jun 27 2024 10:19:32 GMT-0400 (Eastern Daylight Time)',
@@ -97,6 +102,8 @@ const ChatHistoryWindow = () => {
   // State variable to determine if the chat history sidebar is shown or hidden
   const [showHistorySidebar, setShowHistorySidebar] = useState(false);
 
+  const historyLoaded = useSelector((state) => state.chat.historyLoaded);
+
   /**
    * Toggles the visibility of the chat history sidebar.
    *
@@ -105,6 +112,22 @@ const ChatHistoryWindow = () => {
   const toggleHistorySidebar = () => {
     // Toggle the value of showHistorySidebar
     setShowHistorySidebar(!showHistorySidebar);
+  };
+
+  /**
+   * chatHistoryLoader function returns a CircularProgress component to be used as a loader when chat history is being loaded.
+   *
+   * @return {JSX.Element} A CircularProgress component with specified props.
+   */
+  const chatHistoryLoader = () => {
+    // Return a CircularProgress component with specified props
+    return (
+      // Grid container with center aligned content
+      <Grid container justifyContent="center" alignItems="center" height="100%">
+        {/* CircularProgress component with specified props */}
+        <CircularProgress disableShrink size={75} color="primary" />
+      </Grid>
+    );
   };
 
   return (
@@ -120,11 +143,16 @@ const ChatHistoryWindow = () => {
             Chat History
           </Typography>
         </Grid>
-        {/* Toggle button for chat history sidebar */}
-        <Button onClick={toggleHistorySidebar} {...styles.toggleHistoryButton}>
-          {/* Display 'X' when the chat history sidebar is open, otherwise display '+' */}
-          {showHistorySidebar ? 'X' : '+'}
-        </Button>
+        <Fab
+          aria-label={
+            showHistorySidebar ? 'close chat history' : 'open chat history'
+          }
+          size="medium"
+          onClick={toggleHistorySidebar}
+          {...styles.toggleHistoryButton(showHistorySidebar)}
+        >
+          {showHistorySidebar ? <RemoveIcon /> : <AddIcon />}
+        </Fab>
       </Grid>
 
       {/* Content of the chat history sidebar */}
@@ -134,7 +162,11 @@ const ChatHistoryWindow = () => {
           If showHistorySidebar is false, the sidebar is closed and the content is hidden. */}
         {/* Render the chat history */}
         {/* Pass the test data to the ChatHistory component */}
-        <ChatHistory history={testData} />
+        {historyLoaded ? ( // To stop the loading spinner just add ! before historyLoaded like !historyLoaded
+          <ChatHistory history={testData} />
+        ) : (
+          chatHistoryLoader()
+        )}
       </Grid>
     </Grid>
   );
