@@ -5,6 +5,7 @@ admin.initializeApp();
 
 const userController = require('./controllers/userController');
 const kaiAIController = require('./controllers/kaiAIController');
+const fetchChatController = require('./controllers/fetchChatController');
 const { seedDatabase } = require('./cloud_db_seed');
 
 seedDatabase();
@@ -22,6 +23,10 @@ module.exports = {
   chat: kaiAIController.chat,
   tool: kaiAIController.tool,
   createChatSession: kaiAIController.createChatSession,
+
+  // New
+  /* Fetch Chat History */
+  fetchChatHistory: fetchChatController.fetchChatHistory,
 
   /* Migration Scripts - For running  */
   ...migrationScripts,
