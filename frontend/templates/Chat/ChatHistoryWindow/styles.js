@@ -4,45 +4,32 @@
 const styles = {
   /**
    * Styles for the chat history sidebar.
-   *
-   * @param {boolean} showHistorySidebar - Whether the chat history sidebar is shown or hidden.
-   * @return {object} - The styles for the chat history sidebar.
    */
-  historySideBar: (showHistorySidebar) => ({
+  historySideBar: {
     item: true,
     sx: {
       // Set the display property to flex and arrange the children in a column.
       display: 'flex',
       // Set the flex direction to column.
       flexDirection: 'column',
-      // Adjust the border of the sidebar based on the value of showHistorySidebar.
-      // If showHistorySidebar is true, set the border to 5px solid rgba(115,80,255,255).
-      // If showHistorySidebar is false, set the border to none.
-      border: showHistorySidebar ? '5px solid rgba(115,80,255,255)' : 'none',
+      // Set the border to 5px solid rgba(115,80,255,255).
+      border: '5px solid rgba(115,80,255,255)',
       // Set the border radius.
       borderRadius: '15px',
-      // Adjust the background of the sidebar based on the value of showHistorySidebar.
-      // If showHistorySidebar is true, set the background to black.
-      // If showHistorySidebar is false, set the background to transparent.
-      backgroundColor: showHistorySidebar ? '#000000' : 'transparent',
-      // Adjust the min-width of the sidebar based on the value of showHistorySidebar.
-      // If showHistorySidebar is true, set the min-width to 25%.
-      // If showHistorySidebar is false, set the min-width to fit the content.
-      minWidth: showHistorySidebar ? '25%' : 'fit-content',
-      // Adjust the height of the sidebar based on the value of showHistorySidebar.
-      // If showHistorySidebar is true, set the height to 100%.
-      // If showHistorySidebar is false, set the height to fit the content.
-      height: showHistorySidebar ? '100%' : 'fit-content',
+      // Set the background to black.
+      backgroundColor: '#000000',
+      // Set the min-width to 25%.
+      minWidth: '25%',
+      // Set the height to 100%.
+      height: '100%',
       // Set the color to white.
       color: '#ffffff',
       // Set the max width of the sidebar to 25%.
       maxWidth: '25%',
     },
-  }),
+  },
   /**
    * Styles for the header of the chat history sidebar.
-   *
-   * @return {object} - The styles for the chat history sidebar header.
    */
   historySideBarHeader: {
     sx: {
@@ -58,24 +45,19 @@ const styles = {
   },
   /**
    * Styles for the title of the chat history sidebar.
-   *
-   * @param {boolean} showHistorySidebar - Whether the chat history sidebar is shown or hidden.
-   * @return {object} - The styles for the chat history sidebar title.
    */
-  historySideBarTitle: (showHistorySidebar) => ({
+  historySideBarTitle: {
     sx: {
       // Display the title only when the chat history sidebar is shown.
-      display: !showHistorySidebar ? 'none' : 'flex',
+      display: 'flex',
       // The flexGrow property is set to 1 to make the title span the remaining space in the chat history sidebar header.
       flexGrow: 1,
       // Center the title horizontally.
       justifyContent: 'center',
     },
-  }),
+  },
   /**
    * Styles for the title text of the chat history sidebar.
-   *
-   * @return {object} - The styles for the title text.
    */
   historySideBarTitleText: {
     // Center the title text horizontally.
@@ -84,8 +66,7 @@ const styles = {
   /**
    * Styles for the toggle history button.
    *
-   * @param {boolean} showHistorySidebar - Whether the chat history sidebar is shown or hidden.
-   * @return {object} - The styles for the toggle history button.
+   * @param {boolean} showHistorySidebar Whether the chat history sidebar is shown or hidden.
    */
   toggleHistoryButton: (showHistorySidebar) => ({
     sx: {
@@ -96,25 +77,24 @@ const styles = {
       // Adjust the border of the toggle button based on the value of showHistorySidebar.
       // If showHistorySidebar is true, set the border to none.
       // If showHistorySidebar is false, set the border to 5px solid rgba(115,80,255,255).
-      border: !showHistorySidebar ? '5px solid rgba(115,80,255,255)' : 'none',
+      border: showHistorySidebar ? 'none' : '5px solid rgba(115,80,255,255)',
       // Styles for the toggle history button when it is being hovered over.
       '&:hover': {
         // Set the background color to black on hover.
         backgroundColor: '#000000',
+        // Set the text color on hover.
+        color: 'rgba(115,80,255,255)',
       },
     },
   }),
   /**
-   * Styles for the content of the chat history sidebar.
-   *
-   * @param {boolean} showHistorySidebar - Whether the chat history sidebar is shown or hidden.
-   * @return {object} - The styles for the chat history sidebar content.
+   * Styles for the chat history.
    */
-  historySideBarContent: (showHistorySidebar) => ({
+  chatHistory: {
     item: true,
     sx: {
       // Display the sidebar only when showHistorySidebar is true
-      display: showHistorySidebar ? 'block' : 'none',
+      display: 'block',
       // Set the background color to rgba(24,26,32,255)
       backgroundColor: 'rgba(24,26,32,255)',
       // Set the height of the sidebar to 100%
@@ -123,12 +103,47 @@ const styles = {
       width: '100%',
       // Enable vertical scrolling if the content overflows
       overflowY: 'auto',
-      // Set the border radius.
-      borderRadius: '0px 0px 15px 15px',
       // Add a smooth transition when the sidebar is opened or closed
       transition: 'all 0.3s ease',
     },
-  }),
+  },
+
+  /**
+   * Styles for the new chat container. This container is used to center the new chat button vertically and horizontally.
+   */
+  newChatContainer: {
+    item: true,
+    sx: {
+      // Set the display property to flex and arrange the children in a column.
+      display: 'flex',
+      // Center the children horizontally.
+      justifyContent: 'center',
+      // Center the children vertically.
+      alignItems: 'center',
+      // Set the width of the container to 100%.
+      width: '100%',
+      // Set the padding of the container to 5px at the top and bottom.
+      padding: '5px 0',
+    },
+  },
+
+  /**
+   * Styles for the new chat button. This button is used to open the new chat modal.
+   */
+  newChatButton: {
+    sx: {
+      // Set the display property to flex and arrange the children in a row.
+      display: 'flex',
+      // Align the children along the center of the button horizontally.
+      justifyContent: 'space-around',
+      // Set the color of the button to white.
+      color: '#ffffff',
+      // Set the color of the button to white when hovered over.
+      '&:hover': {
+        color: '#ffffff',
+      },
+    },
+  },
 };
 
 export default styles;

@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { MESSAGE_ROLE, MESSAGE_TYPES } from '@/constants/bots';
 
+import fetchChat from '../thunks/fetchChat';
+
 const initialState = {
   input: '',
   error: null,
@@ -125,6 +127,24 @@ const chatSlice = createSlice({
     setExerciseId: (state, action) => {
       state.exerciseId = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchChat.pending, (state) => {
+        state.sessionLoaded = false;
+        state.error = null;
+      })
+      .addCase(fetchChat.fulfilled, (state, action) => {
+        state.chat = action.payload;
+        state.sessionLoaded = true;
+        state.error = null;
+      })
+      .addCase(fetchChat.rejected, (state, action) => {
+        state.chat = {};
+        state.sessionLoaded = true;
+        console.error(action.error);
+        state.error = 'Could not fetch chat. Please try again.';
+      });
   },
 });
 

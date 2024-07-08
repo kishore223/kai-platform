@@ -42,6 +42,10 @@ import {
   setStreamingDone,
   setTyping,
 } from '@/redux/slices/chatSlice';
+import {
+  addHistoryEntry,
+  updateHistoryEntry,
+} from '@/redux/slices/historySlice';
 import { firestore } from '@/redux/store';
 import createChatSession from '@/services/chatbot/createChatSession';
 import sendMessage from '@/services/chatbot/sendMessage';
@@ -100,6 +104,27 @@ const ChatInterface = () => {
     // Set chat session
     dispatch(setChatSession(data));
     dispatch(setSessionLoaded(true));
+
+    /**
+     * Creates a new entry in the history store.
+     * The entry contains the session ID, the first message of the session,
+     * the creation and update timestamps of the session.
+     *
+     * @param {Object} data The session data object.
+     */
+    const newEntry = {
+      // The ID of the session.
+      id: data?.id,
+      // The first message of the session.
+      title: data?.messages[0]?.payload?.text,
+      // The timestamp of session creation.
+      createdAt: data?.createdAt,
+      // The timestamp of session last update.
+      updatedAt: data?.updatedAt,
+    };
+
+    // Add the new history entry to the Redux store.
+    dispatch(addHistoryEntry(newEntry));
   };
 
   useEffect(() => {
@@ -133,6 +158,19 @@ const ChatInterface = () => {
             const updatedMessages = updatedData.messages;
 
             const lastMessage = updatedMessages[updatedMessages.length - 1];
+            // Convert Firestore timestamp to JavaScript Date object and format it as an ISO string.
+            lastMessage.timestamp = lastMessage.timestamp
+              .toDate()
+              .toISOString();
+
+            // Update the history entry with the latest timestamp.
+            dispatch(
+              updateHistoryEntry({
+                id: sessionId,
+                updatedAt: updatedData.updatedAt.toDate().toISOString(),
+                // updatedAt: lastMessage.timestamp,
+              })
+            );
 
             if (lastMessage?.role === MESSAGE_ROLE.AI) {
               dispatch(
@@ -359,7 +397,7 @@ const ChatInterface = () => {
 
   return (
     <Grid {...styles.chatInterface}>
-      <Grid {...styles.mainGridProps} xs={9}>
+      <Grid {...styles.mainGridProps}>
         {renderMoreChat()}
         {renderCenterChatContent()}
         {renderCenterChatContentNoMessages()}
